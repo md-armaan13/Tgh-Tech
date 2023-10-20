@@ -53,7 +53,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
         const token = jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: expiration });
 
-        return res.status(200).json({ status : 200,
+        return res.status(201).json({ status : 201,
             message: 'Login Successful',
             "hasError" : false,
             data : {

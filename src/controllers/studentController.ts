@@ -12,7 +12,7 @@ export const viewTasks = async (req: express.Request, res: express.Response) => 
       populate: { path: 'tasks' }
     });
 
-    return res.status(200).json({ status : 200,
+    return res.status(201).json({ status : 201,
       message: 'Task fetched successfully',
       "hasError" : false,
       data : user?.profile,
@@ -36,7 +36,7 @@ export const updateTaskStatus = async (req: express.Request<{id : string}>, res:
   try {
     const task = await Task.findById(taskId);
     if (!task) {
-      return res.status(404).json({ status : 404,
+      return res.status(400).json({ status : 400,
         message: 'Task Not Found',
         "hasError" : true,
         data : null,
@@ -44,7 +44,7 @@ export const updateTaskStatus = async (req: express.Request<{id : string}>, res:
     }
    
     if(task?.profileId.toString() != id.toString()){
-      return res.status(404).json({ status : 404,
+      return res.status(400).json({ status : 400,
         message: 'Unauthourised acecss to task',
         "hasError" : true,
         data : null,
@@ -55,7 +55,7 @@ export const updateTaskStatus = async (req: express.Request<{id : string}>, res:
     task.status = 'completed';
     await task.save();
 
-    return res.status(200).json({ status : 200,
+    return res.status(201).json({ status : 201,
       message: 'Task status updated successfully',
       "hasError" : false,
       data : task,

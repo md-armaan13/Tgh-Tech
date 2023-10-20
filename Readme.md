@@ -57,6 +57,27 @@ The folder structure of this app is explained below:
 These endpoints allow you to make request to the backend from the client side.
 
 ## POST
+`POST /login`<br/>
+A route to loggedIn admin and student
+
+**Paramters**
+| Name | Required | Type | Description |
+| -------------:|:--------:|:-------:|------------- |
+| `email` | required | string | It requires valid email of the user|
+| `password` | required | string | A valid non empty 6 digit password |
+**Response**
+
+
+```
+{
+    "status": 201,
+    "msg": "Login Succesully",
+    "hasError": false,
+    "data": {
+      access_token : token
+    }
+}
+```
 
 `POST /admin/add-student`<br/>
 A protected route only access by admin to add students
@@ -65,7 +86,7 @@ A protected route only access by admin to add students
 | Name | Required | Type | Description |
 | -------------:|:--------:|:-------:|------------- |
 | `name` | required | string |It requires full name of user , only alphabets ( Lowercase and Uppercase Both ).|
-| `email` | required | string | It requires valid email of the user for further updates |
+| `email` | required | string | It requires valid email of the user |
 | `department` | required | string | It require name of department|
 | `password` | required | string | A valid non empty 6 digit password |
 **Response**
@@ -105,6 +126,7 @@ A protected route only accessed by admin to assign task to students.
 }
 
 ```
+## GET
 `GET /student/view-task`<br/>
 A protected route  accessed by students to get all the task assigned to them
 
@@ -112,7 +134,7 @@ A protected route  accessed by students to get all the task assigned to them
 
 ```
 {
-    "status": 200,
+    "status": 201,
     "msg": "Task fetched Successfully",
     "hasError": false,
     "data": tasks
@@ -125,7 +147,7 @@ A protected route  accessed by students to update the status of the task
 
 ```
 {
-    "status": 200,
+    "status": 201,
     "msg": "Task status updated successfully",
     "hasError": false,
     "data": task
