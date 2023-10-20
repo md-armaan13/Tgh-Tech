@@ -7,7 +7,7 @@ interface Profile extends Document {
 }
 const profileSchema = new mongoose.Schema<Profile>({
     name: { type: String, required: true, default: null },
-    department: { type: String, required: true, default: null },
+    department: { type: String, default: null },
     tasks: [
         {
             type: mongoose.SchemaTypes.ObjectId,

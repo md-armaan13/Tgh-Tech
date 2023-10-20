@@ -34,7 +34,7 @@ npm start
 
 - API Document endpoints
 
-  Postman Doc : http://localhost:8001/api-docs 
+  Postman Doc : https://documenter.getpostman.com/view/24060698/2s9YRB2sCj
 
 ## Project Structure
 The folder structure of this app is explained below:
@@ -152,4 +152,4 @@ A protected route  accessed by students to update the status of the task
     "hasError": false,
     "data": task
 }
----
+

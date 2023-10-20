@@ -13,7 +13,7 @@ function IsAdmin(user: User){
 }
  
 export const addStudent = async (req: express.Request, res: express.Response) => {
-    const { name, email, department, password } = req.body;
+    const { name, email, department=null, password } = req.body;
     const user = req.user || req.body;
 
     if(!IsAdmin(user)){
@@ -34,7 +34,7 @@ export const addStudent = async (req: express.Request, res: express.Response) =>
          });
       }
 
-      if(!name || !email || !department || !password){
+      if(!name || !email  || !password){
          return res.status(400).json({ status : 400,
             message: 'Please fill all the fields',
             "hasError" : true,
