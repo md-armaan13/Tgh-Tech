@@ -3,10 +3,6 @@ import { jwtAuth } from '../middleware/auth-middleware';
 import { updateTaskStatus, viewTasks } from '../controllers/studentController';
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello Student!!!');
-});
-
 router.get('/view-tasks', jwtAuth , viewTasks);
 router.get('/update-task-status/:id', jwtAuth , updateTaskStatus);
 export default router;

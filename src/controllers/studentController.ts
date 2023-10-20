@@ -12,10 +12,18 @@ export const viewTasks = async (req: express.Request, res: express.Response) => 
       populate: { path: 'tasks' }
     });
 
-    return res.status(200).json({ message :"sucessfully fetch tasks" ,data : user});
+    return res.status(200).json({ status : 200,
+      message: 'Task fetched successfully',
+      "hasError" : false,
+      data : user?.profile,
+   });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'An error occurred' });
+    return res.status(500).json({ status : 500,
+      message: 'An Error occured',
+      "hasError" : true,
+      data : null,
+   });
   }
 }
 
@@ -24,26 +32,40 @@ export const viewTasks = async (req: express.Request, res: express.Response) => 
 export const updateTaskStatus = async (req: express.Request<{id : string}>, res: express.Response) => {
   const taskId = req.params.id;
   const user = req.user || req.body;
-  console.log(user);
   const id = user.profile;
-  console.log(id);
   try {
     const task = await Task.findById(taskId);
     if (!task) {
-      return res.status(404).json({ message: 'Task not found' });
+      return res.status(404).json({ status : 404,
+        message: 'Task Not Found',
+        "hasError" : true,
+        data : null,
+     });
     }
    
     if(task?.profileId.toString() != id.toString()){
-      return res.status(404).json({ message: 'Unable to update Task' });
+      return res.status(404).json({ status : 404,
+        message: 'Unauthourised acecss to task',
+        "hasError" : true,
+        data : null,
+     });
     }
    
 
-    task.status = 'completed'; // You can customize this as needed
+    task.status = 'completed';
     await task.save();
 
-    return res.status(200).json({ message: 'Task status updated',data : task});
+    return res.status(200).json({ status : 200,
+      message: 'Task status updated successfully',
+      "hasError" : false,
+      data : task,
+   });
   } catch (error) {
-    return res.status(500).json({ message: 'An error occurred' });
+    return res.status(500).json({ status : 500,
+      message: 'An Error occured',
+      "hasError" : true,
+      data : null,
+   });
   }
 }
 

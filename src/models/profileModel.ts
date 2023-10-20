@@ -4,7 +4,6 @@ interface Profile extends Document {
     name: string;
     department: string;
     tasks: Task[];
-    // Other profile-related fields
 }
 const profileSchema = new mongoose.Schema<Profile>({
     name: { type: String, required: true, default: null },

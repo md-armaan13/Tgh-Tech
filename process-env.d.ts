@@ -3,6 +3,9 @@ declare namespace NodeJS {
         [key: string]: string | undefined;
         PORT: string;
         MONGO_URL: string;
+        salt:string;
+        JWT_SECRET_KEY:string;
+        ExpiresIn:string;
        
     }
 }

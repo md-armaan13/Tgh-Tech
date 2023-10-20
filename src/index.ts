@@ -9,7 +9,7 @@ import passport from 'passport';
 
 import db from './config/mongo';
 import indexRouter from './routes/index';
-import User from './models/userModel';
+
 
 const port = process.env.PORT;
 
@@ -31,11 +31,7 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
-declare module "express" {
-    interface Request {
-      user?: User;
-    }
-}
+
 app.use('/',indexRouter); 
 const passportJwt = require('./config/mongo.ts');
 

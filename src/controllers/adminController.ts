@@ -17,17 +17,29 @@ export const addStudent = async (req: express.Request, res: express.Response) =>
     const user = req.user || req.body;
 
     if(!IsAdmin(user)){
-       return res.status(400).json({ message: 'You are not authorized to add student' });
+       return res.status(400).json({ status : 400,
+        message: 'You are not authorized to add student',
+        "hasError" : true,
+        data : null,
+     });
     }
    
     try {
       const user = await User.findOne({ email });
       if(user){
-        return res.status(400).json({ message: 'User already exists' });
+        return res.status(400).json({ status : 400,
+            message: 'User Already Exists',
+            "hasError" : true,
+            data : null,
+         });
       }
 
       if(!name || !email || !department || !password){
-         return res.status(400).json({ message: 'Please fill all the fields' });
+         return res.status(400).json({ status : 400,
+            message: 'Please fill all the fields',
+            "hasError" : true,
+            data : null
+         });
       }
     
       const hashedPassword = await hashPassword(password);
@@ -37,10 +49,18 @@ export const addStudent = async (req: express.Request, res: express.Response) =>
       newuser.profile = profile;
       await newuser.save();
   
-      return res.status(201).json({ message: 'Student added successfully', data : newuser});
+      return res.status(201).json({ status : 201,
+        message: 'User created successfully',
+        "hasError" : false,
+        data : newuser,
+     });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: 'An error occurred' });
+        return res.status(500).json({ status : 500,
+            message: 'An Error occured',
+            "hasError" : true,
+            data : null,
+         });
     }
   }
 
@@ -49,13 +69,21 @@ export const addStudent = async (req: express.Request, res: express.Response) =>
     const { profileId, title, description, dueDate } = req.body;
     const user = req.user || req.body;
     if(!IsAdmin(user)){
-      res.status(400).json({ message: 'You are not authorized to add student' });
+      return res.status(400).json({ status : 400,
+        message: 'You are not authorized to assign task',
+        "hasError" : true,
+        data : null,
+     });
     }
     try {
         const student = await Profile.findById(profileId);
 
         if(!student){
-            res.status(400).json({ message: 'Student does not exists' });
+            return res.status(400).json({ status : 400,
+                message: 'student does not exist',
+                "hasError" : true,
+                data : null,
+             });
         } else {
             const date = new Date(dueDate);
             const task = await Task.create({ profileId,title, description, dueDate: date });
@@ -66,11 +94,19 @@ export const addStudent = async (req: express.Request, res: express.Response) =>
             }
             await student.save();
 
-            res.status(201).json({ message: 'Task assigned successfully' , data : task});
+            return res.status(201).json({ status : 201,
+                message: 'Task assigned successfully',
+                "hasError" : false,
+                data : task,
+             });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'An error occurred' });
+        return  res.status(500).json({ status : 500,
+            message: 'An Error occured',
+            "hasError" : true,
+            data : null,
+         });
     }
   }
 
