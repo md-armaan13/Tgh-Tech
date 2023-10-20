@@ -1,4 +1,3 @@
-
 import passport from '../auth/passport';
 import { Request, Response, NextFunction } from 'express';
 import  User  from '../models/userModel';
